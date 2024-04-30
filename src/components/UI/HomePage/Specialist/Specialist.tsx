@@ -1,4 +1,4 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 
@@ -74,6 +74,14 @@ const Specialist = async () => {
             </Box>
           ))}
         </Stack>
+        <Button
+          variant="outlined"
+          sx={{
+            marginTop: "40px",
+          }}
+        >
+          View All
+        </Button>
       </Box>
     </Container>
   );
