@@ -14,6 +14,11 @@ export const theme = createTheme({
       defaultProps: {
         variant: "contained",
       },
+      styleOverrides: {
+        root: {
+          padding: "8px 24px",
+        },
+      },
     },
     MuiContainer: {
       defaultProps: {
