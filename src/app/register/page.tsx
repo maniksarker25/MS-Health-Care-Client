@@ -10,19 +10,26 @@ import {
 import Image from "next/image";
 import assets from "@/assets";
 import Link from "next/link";
-
+import { useForm, SubmitHandler } from "react-hook-form";
+type Inputs = {
+  example: string;
+  exampleRequired: string;
+};
 const RegisterPage = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
   return (
-    <Container
-      sx={{
-        padding: "50px",
-      }}
-    >
+    <Container>
       <Stack
         sx={{
           justifyContent: "center",
           alignItems: "center",
-          height: "80vh",
+          height: "100vh",
         }}
       >
         <Box
