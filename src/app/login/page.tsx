@@ -1,3 +1,4 @@
+"use client";
 import {
   Box,
   Button,
@@ -10,8 +11,37 @@ import {
 import Image from "next/image";
 import assets from "@/assets";
 import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { userLogin } from "@/services/actions/userLogin";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { storeUserInfo } from "@/services/auth.services";
+
+export type TLoginFormValue = {
+  email: string;
+  password: string;
+};
 
 const LoginPage = () => {
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<TLoginFormValue>();
+  const onSubmit: SubmitHandler<TLoginFormValue> = async (data) => {
+    try {
+      const res = await userLogin(data);
+      if (res.success) {
+        storeUserInfo(res?.data?.accessToken);
+        toast.success(res.message);
+        router.push("/");
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
   return (
     <Container>
       <Stack
@@ -51,14 +81,14 @@ const LoginPage = () => {
             </Box>
           </Stack>
           <Box textAlign={"center"}>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Grid container spacing={3} my={1}>
                 <Grid item md={6}>
                   <TextField
                     id="email"
                     label="Email"
                     type="email"
-                    name="email"
+                    {...register("email")}
                     variant="outlined"
                     size="small"
                     fullWidth={true}
@@ -69,7 +99,7 @@ const LoginPage = () => {
                     id="password"
                     label="Password"
                     type="password"
-                    name="password"
+                    {...register("password")}
                     variant="outlined"
                     size="small"
                     fullWidth={true}
@@ -89,6 +119,7 @@ const LoginPage = () => {
                 sx={{
                   margin: "20px 0px",
                 }}
+                type="submit"
               >
                 Login
               </Button>
