@@ -33,6 +33,7 @@ const LoginPage = () => {
   const onSubmit: SubmitHandler<TLoginFormValue> = async (data) => {
     try {
       const res = await userLogin(data);
+      // console.log(res);
       if (res.success) {
         storeUserInfo(res?.data?.accessToken);
         toast.success(res.message);
