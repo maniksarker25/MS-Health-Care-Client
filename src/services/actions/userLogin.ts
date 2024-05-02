@@ -1,6 +1,7 @@
 import { TLoginFormValue } from "@/app/login/page";
+import { FieldValues } from "react-hook-form";
 
-export const userLogin = async (data: TLoginFormValue) => {
+export const userLogin = async (data: FieldValues) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_LOCAL_API_URL}/auth/login-user`,
     {

@@ -11,11 +11,12 @@ import {
 import Image from "next/image";
 import assets from "@/assets";
 import Link from "next/link";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import { userLogin } from "@/services/actions/userLogin";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { storeUserInfo } from "@/services/auth.services";
+import MSForm from "@/components/Forms/MSForm";
 
 export type TLoginFormValue = {
   email: string;
@@ -24,13 +25,7 @@ export type TLoginFormValue = {
 
 const LoginPage = () => {
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<TLoginFormValue>();
-  const onSubmit: SubmitHandler<TLoginFormValue> = async (data) => {
+  const handleLogin = async (data: FieldValues) => {
     try {
       const res = await userLogin(data);
       // console.log(res);
@@ -82,7 +77,7 @@ const LoginPage = () => {
             </Box>
           </Stack>
           <Box textAlign={"center"}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <MSForm onSubmit={handleLogin}>
               <Grid container spacing={3} my={1}>
                 <Grid item md={6}>
                   <TextField
@@ -130,7 +125,7 @@ const LoginPage = () => {
                   Create an account
                 </Link>
               </Typography>
-            </form>
+            </MSForm>
           </Box>
         </Box>
       </Stack>
