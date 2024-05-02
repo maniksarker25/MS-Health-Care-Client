@@ -1,6 +1,6 @@
-import { IPatientRegisterFormData } from "@/app/register/page";
+import { FieldValues } from "react-hook-form";
 
-export const modifyPayload = (values: IPatientRegisterFormData) => {
+export const modifyPayload = (values: FieldValues) => {
   const obj = { ...values };
   const data = JSON.stringify(obj);
   const formData = new FormData();

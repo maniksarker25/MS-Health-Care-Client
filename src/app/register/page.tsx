@@ -11,35 +11,20 @@ import {
 import Image from "next/image";
 import assets from "@/assets";
 import Link from "next/link";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { modifyPayload } from "@/utils/modifyPayload";
 import { registerPatient } from "@/services/actions/registerPatient";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { userLogin } from "@/services/actions/userLogin";
 import { storeUserInfo } from "@/services/auth.services";
+import MSForm from "@/components/Forms/MSForm";
+import MSInput from "@/components/Forms/MSInput";
 
-interface IPatientData {
-  name: string;
-  email: string;
-
-  contactNumber: string;
-  address: string;
-}
-
-export interface IPatientRegisterFormData {
-  password: string;
-  patient: IPatientData;
-}
 const RegisterPage = () => {
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<IPatientRegisterFormData>();
-  const onSubmit: SubmitHandler<IPatientRegisterFormData> = async (values) => {
+
+  const handleRegister = async (values: FieldValues) => {
     const data = modifyPayload(values);
     try {
       const res = await registerPatient(data);
@@ -98,60 +83,45 @@ const RegisterPage = () => {
             </Box>
           </Stack>
           <Box textAlign={"center"}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <MSForm onSubmit={handleRegister}>
               <Grid container spacing={3} my={1}>
                 <Grid item md={12}>
-                  <TextField
-                    id="name"
+                  <MSInput
                     label="Name"
                     type="text"
-                    variant="outlined"
-                    size="small"
                     fullWidth={true}
-                    {...register("patient.name")}
+                    name="patient.name"
                   />
                 </Grid>
                 <Grid item md={6}>
-                  <TextField
-                    id="email"
+                  <MSInput
                     label="Email"
                     type="email"
-                    variant="outlined"
-                    size="small"
                     fullWidth={true}
-                    {...register("patient.email")}
+                    name="patient.email"
                   />
                 </Grid>
                 <Grid item md={6}>
-                  <TextField
-                    id="password"
+                  <MSInput
                     label="Password"
                     type="password"
-                    {...register("password")}
-                    variant="outlined"
-                    size="small"
                     fullWidth={true}
+                    name="password"
                   />
                 </Grid>
                 <Grid item md={6}>
-                  <TextField
-                    id="contactNumber"
+                  <MSInput
                     label="Contact Number"
                     type="text"
-                    {...register("patient.contactNumber")}
-                    variant="outlined"
-                    size="small"
+                    name="patient.contactNumber"
                     fullWidth={true}
                   />
                 </Grid>
                 <Grid item md={6}>
-                  <TextField
-                    id="address"
+                  <MSInput
                     label="Address"
                     type="text"
-                    {...register("patient.address")}
-                    variant="outlined"
-                    size="small"
+                    name="patient.address"
                     fullWidth={true}
                   />
                 </Grid>
@@ -171,7 +141,7 @@ const RegisterPage = () => {
                   Login
                 </Link>
               </Typography>
-            </form>
+            </MSForm>
           </Box>
         </Box>
       </Stack>
