@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { storeUserInfo } from "@/services/auth.services";
 import MSForm from "@/components/Forms/MSForm";
+import MSInput from "@/components/Forms/MSInput";
 
 export type TLoginFormValue = {
   email: string;
@@ -80,24 +81,19 @@ const LoginPage = () => {
             <MSForm onSubmit={handleLogin}>
               <Grid container spacing={3} my={1}>
                 <Grid item md={6}>
-                  <TextField
-                    id="email"
+                  <MSInput
                     label="Email"
                     type="email"
-                    {...register("email")}
-                    variant="outlined"
                     size="small"
                     fullWidth={true}
+                    name="email"
                   />
                 </Grid>
                 <Grid item md={6}>
-                  <TextField
-                    id="password"
+                  <MSInput
                     label="Password"
                     type="password"
-                    {...register("password")}
-                    variant="outlined"
-                    size="small"
+                    name="password"
                     fullWidth={true}
                   />
                 </Grid>

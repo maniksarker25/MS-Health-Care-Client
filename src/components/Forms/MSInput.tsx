@@ -9,7 +9,13 @@ type TInputProps = {
   fullWidth?: boolean;
 };
 
-const MSInput = ({ name, label, type, size, fullWidth }: TInputProps) => {
+const MSInput = ({
+  name,
+  label,
+  type = "text",
+  size = "small",
+  fullWidth,
+}: TInputProps) => {
   const { control } = useFormContext();
   return (
     <Controller
