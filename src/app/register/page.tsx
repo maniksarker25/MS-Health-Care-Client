@@ -22,6 +22,7 @@ import MSForm from "@/components/Forms/MSForm";
 import MSInput from "@/components/Forms/MSInput";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 
 export const patientValidationSchema = z.object({
   name: z
@@ -48,8 +49,10 @@ export const patientRegisterValidationSchema = z.object({
 
 const RegisterPage = () => {
   const router = useRouter();
+  const [error, setError] = useState("");
 
   const handleRegister = async (values: FieldValues) => {
+    setError("");
     const data = modifyPayload(values);
     try {
       const res = await registerPatient(data);
@@ -63,6 +66,8 @@ const RegisterPage = () => {
           toast.success(result.message);
           router.push("/");
         }
+      } else {
+        setError(res.message);
       }
     } catch (error: any) {
       console.log(error.message);
@@ -154,6 +159,11 @@ const RegisterPage = () => {
                   />
                 </Grid>
               </Grid>
+              {error && (
+                <Box>
+                  <Typography color={"red"}>{error}</Typography>
+                </Box>
+              )}
               <Button
                 type="submit"
                 fullWidth={true}
