@@ -20,6 +20,7 @@ import MSForm from "@/components/Forms/MSForm";
 import MSInput from "@/components/Forms/MSInput";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 
 export type TLoginFormValue = {
   email: string;
@@ -36,8 +37,10 @@ export const validationSchema = z.object({
 });
 
 const LoginPage = () => {
+  const [error, setError] = useState("");
   const router = useRouter();
   const handleLogin = async (data: FieldValues) => {
+    setError("");
     try {
       const res = await userLogin(data);
       // console.log(res);
@@ -45,8 +48,11 @@ const LoginPage = () => {
         storeUserInfo(res?.data?.accessToken);
         toast.success(res.message);
         router.push("/");
+      } else {
+        setError(res.message);
       }
     } catch (error: any) {
+      console.log(error.message);
       console.log(error.message);
     }
   };
@@ -120,6 +126,11 @@ const LoginPage = () => {
               >
                 Forget Password
               </Typography>
+              {error && (
+                <Box>
+                  <Typography color={"red"}>{error}</Typography>
+                </Box>
+              )}
               <Button
                 fullWidth={true}
                 sx={{
