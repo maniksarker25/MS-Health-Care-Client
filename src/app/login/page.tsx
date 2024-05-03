@@ -18,11 +18,20 @@ import { useRouter } from "next/navigation";
 import { storeUserInfo } from "@/services/auth.services";
 import MSForm from "@/components/Forms/MSForm";
 import MSInput from "@/components/Forms/MSInput";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export type TLoginFormValue = {
   email: string;
   password: string;
 };
+
+export const validationSchema = z.object({
+  email: z
+    .string({ required_error: "Email is required" })
+    .email("Please enter valid email address!"),
+  password: z.string().min(6, "Password must be at least 6 characters!"),
+});
 
 const LoginPage = () => {
   const router = useRouter();
@@ -78,7 +87,10 @@ const LoginPage = () => {
             </Box>
           </Stack>
           <Box textAlign={"center"}>
-            <MSForm onSubmit={handleLogin}>
+            <MSForm
+              onSubmit={handleLogin}
+              resolver={zodResolver(validationSchema)}
+            >
               <Grid container spacing={3} my={1}>
                 <Grid item md={6}>
                   <MSInput
