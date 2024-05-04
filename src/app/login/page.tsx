@@ -119,7 +119,9 @@ const LoginPage = () => {
                 </Grid>
               </Grid>
               <Typography
-                className="cursor-pointer"
+                sx={{
+                  cursor: "pointer",
+                }}
                 textAlign={"end"}
                 component="p"
                 fontWeight={600}
@@ -142,7 +144,7 @@ const LoginPage = () => {
               </Button>
               <Typography component="p" fontWeight={300}>
                 Don&apos;t have an account?
-                <Link className="text-[#1586FD]" href={"/register"}>
+                <Link style={{ color: "#1586FD" }} href={"/register"}>
                   Create an account
                 </Link>
               </Typography>
