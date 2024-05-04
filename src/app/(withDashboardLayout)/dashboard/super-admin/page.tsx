@@ -1,4 +1,4 @@
-const SuperAdminPage = () => {
+const SuperAdminDashboard = () => {
   return (
     <div>
       <h1>Super admin dashboard</h1>
@@ -6,4 +6,4 @@ const SuperAdminPage = () => {
   );
 };
 
-export default SuperAdminPage;
+export default SuperAdminDashboard;
