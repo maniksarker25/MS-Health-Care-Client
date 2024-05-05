@@ -28,7 +28,7 @@ const SideBar = () => {
       </Stack>
       <List>
         {generateDrawerItems("admin" as TUserRole).map((item, index) => (
-          <SideBarItems key={index} index={index} item={item}></SideBarItems>
+          <SideBarItems key={index} item={item}></SideBarItems>
         ))}
       </List>
     </Box>
