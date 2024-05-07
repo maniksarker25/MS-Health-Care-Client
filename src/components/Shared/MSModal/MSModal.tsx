@@ -28,10 +28,11 @@ type TModalProps = {
 };
 
 export default function MSModal({
-  open,
+  open = false,
   setOpen,
-  title,
+  title = "",
   children,
+  sx,
 }: TModalProps) {
   const handleClose = () => {
     setOpen(false);
@@ -43,6 +44,7 @@ export default function MSModal({
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
+        sx={{ ...sx }}
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           {title}
@@ -61,11 +63,6 @@ export default function MSModal({
         </IconButton>
 
         <DialogContent dividers>{children}</DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Save changes
-          </Button>
-        </DialogActions>
       </BootstrapDialog>
     </React.Fragment>
   );
