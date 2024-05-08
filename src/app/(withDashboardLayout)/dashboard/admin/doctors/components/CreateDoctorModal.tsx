@@ -9,6 +9,7 @@ import MSForm from "@/components/Forms/MSForm";
 import MSInput from "@/components/Forms/MSInput";
 import MSSelect from "@/components/Forms/MSSelect";
 import { Gender } from "@/constants/common";
+import { useCreateDoctorMutation } from "@/redux/api/doctorApi";
 
 type TProps = {
   open: boolean;
@@ -16,8 +17,20 @@ type TProps = {
 };
 
 const DoctorModal = ({ open, setOpen }: TProps) => {
+  const [createDoctor] = useCreateDoctorMutation();
   const handleCreateDoctor = async (values: FieldValues) => {
-    console.log(values);
+    values.doctor.experience = Number(values.doctor.experience);
+    values.doctor.appointmentFee = Number(values.doctor.appointmentFee);
+    const data = await modifyPayload(values);
+    try {
+      const res = await createDoctor(data).unwrap();
+      if (res?.id) {
+        toast.success("Doctor created successfully!!!");
+        setOpen(false);
+      }
+    } catch (error: any) {
+      console.error(error.message);
+    }
   };
   return (
     <MSFullScreenModal open={open} setOpen={setOpen} title="Create New Doctor">
@@ -94,9 +107,9 @@ const DoctorModal = ({ open, setOpen }: TProps) => {
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
             <MSInput
-              name="doctor.apointmentFee"
+              name="doctor.appointmentFee"
               type="number"
-              label="ApointmentFee"
+              label="Appointment Fee"
               fullWidth={true}
               sx={{ mb: 2 }}
             />
