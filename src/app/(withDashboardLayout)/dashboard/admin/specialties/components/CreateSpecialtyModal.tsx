@@ -2,18 +2,34 @@ import MSFileUploader from "@/components/Forms/MSFileUploader";
 import MSForm from "@/components/Forms/MSForm";
 import MSInput from "@/components/Forms/MSInput";
 import MSModal from "@/components/Shared/MSModal/MSModal";
+import { useCreateSpecialtyMutation } from "@/redux/api/specialtiesApi";
+import { modifyPayload } from "@/utils/modifyPayload";
 import { Button, Grid, Stack } from "@mui/material";
 
 import React from "react";
 import { FieldValues } from "react-hook-form";
+import { toast } from "sonner";
 
 type TProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const SpecialistModal = ({ open, setOpen }: TProps) => {
-  const handleCreateSpecialty = (values: FieldValues) => {
-    console.log(values);
+const CreateSpecialtyModal = ({ open, setOpen }: TProps) => {
+  const [createSpecialty] = useCreateSpecialtyMutation();
+
+  const handleCreateSpecialty = async (values: FieldValues) => {
+    const data = modifyPayload(values);
+    try {
+      const res = await createSpecialty(data).unwrap();
+      if (res?.id) {
+        toast.success("Specialty created successfully");
+        setOpen(false);
+      } else {
+        toast.error(res.message);
+      }
+    } catch (error: any) {
+      console.error(error.message);
+    }
   };
   return (
     <MSModal open={open} setOpen={setOpen} title={"Create A New Specialty"}>
@@ -41,4 +57,4 @@ const SpecialistModal = ({ open, setOpen }: TProps) => {
   );
 };
 
-export default SpecialistModal;
+export default CreateSpecialtyModal;
