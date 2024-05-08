@@ -3,6 +3,7 @@ import { Box, Button, Stack, TextField } from "@mui/material";
 import React, { useState } from "react";
 import CreateSpecialtyModal from "./components/CreateSpecialtyModal";
 import { useGetAllSpecialtiesQuery } from "@/redux/api/specialtiesApi";
+import SpecialtiesTable from "./components/SpecialtiesTable";
 
 const SpecialtiesPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -19,8 +20,12 @@ const SpecialtiesPage = () => {
         <CreateSpecialtyModal open={isModalOpen} setOpen={setIsModalOpen} />
         <TextField size="small" label="Search Specialties" />
       </Stack>
-      <Box>
-        <h1>Display specialties</h1>
+      <Box
+        sx={{
+          mt: "20px",
+        }}
+      >
+        {!isLoading ? <SpecialtiesTable data={data} /> : <h1>Loading.....</h1>}
       </Box>
     </Box>
   );
