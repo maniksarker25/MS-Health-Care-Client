@@ -8,7 +8,7 @@ import SpecialtiesTable from "./components/SpecialtiesTable";
 const SpecialtiesPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { data, isLoading } = useGetAllSpecialtiesQuery(undefined);
-  console.log(data);
+  // console.log(data);
   return (
     <Box>
       <Stack
