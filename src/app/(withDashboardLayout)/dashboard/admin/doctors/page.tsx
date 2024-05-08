@@ -2,9 +2,14 @@
 import { Box, Button, Stack, TextField } from "@mui/material";
 import React, { useState } from "react";
 import CreateDoctorModal from "./components/CreateDoctorModal";
+import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
+import DoctorTable from "./components/DoctorTable";
 
 const DoctorsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { data, isLoading } = useGetAllDoctorsQuery({});
+  const doctors = data?.doctors;
+  const meta = data?.meta;
 
   return (
     <Box>
@@ -17,6 +22,17 @@ const DoctorsPage = () => {
         <CreateDoctorModal open={isModalOpen} setOpen={setIsModalOpen} />
         <TextField size="small" label="Search Specialties" />
       </Stack>
+      <Box
+        sx={{
+          mt: "20px",
+        }}
+      >
+        {!isLoading && doctors && meta ? (
+          <DoctorTable doctors={doctors} meta={meta} />
+        ) : (
+          <h1>Loading.....</h1>
+        )}
+      </Box>
     </Box>
   );
 };
