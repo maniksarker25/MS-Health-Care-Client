@@ -7,6 +7,8 @@ import { toast } from "sonner";
 import MSFullScreenModal from "@/components/Shared/MSModal/MSFullScreenModal";
 import MSForm from "@/components/Forms/MSForm";
 import MSInput from "@/components/Forms/MSInput";
+import MSSelect from "@/components/Forms/MSSelect";
+import { Gender } from "@/constants/common";
 
 type TProps = {
   open: boolean;
@@ -14,7 +16,9 @@ type TProps = {
 };
 
 const DoctorModal = ({ open, setOpen }: TProps) => {
-  const handleCreateDoctor = async (values) => {};
+  const handleCreateDoctor = async (values: FieldValues) => {
+    console.log(values);
+  };
   return (
     <MSFullScreenModal open={open} setOpen={setOpen} title="Create New Doctor">
       <MSForm onSubmit={handleCreateDoctor}>
@@ -80,14 +84,14 @@ const DoctorModal = ({ open, setOpen }: TProps) => {
               sx={{ mb: 2 }}
             />
           </Grid>
-          {/* <Grid item xs={12} sm={12} md={4}>
-            <PHSelectField
+          <Grid item xs={12} sm={12} md={4}>
+            <MSSelect
               items={Gender}
               name="doctor.gender"
               label="Gender"
               sx={{ mb: 2 }}
             />
-          </Grid> */}
+          </Grid>
           <Grid item xs={12} sm={12} md={4}>
             <MSInput
               name="doctor.apointmentFee"
