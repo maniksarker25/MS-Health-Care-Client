@@ -4,6 +4,7 @@ import { DataGrid, GridColDef, GridDeleteIcon } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Link from "next/link";
+import { toast } from "sonner";
 
 const DoctorTable = ({
   doctors,
@@ -12,6 +13,18 @@ const DoctorTable = ({
   doctors: IDoctor[];
   meta: TMeta;
 }) => {
+  const handleDelete = async (id: string) => {
+    // try {
+    //   if (res?.id) {
+    //     toast.success("Doctor deleted successfully");
+    //   } else {
+    //     toast.error(res.message);
+    //   }
+    // } catch (error: any) {
+    //   console.error(error.message);
+    // }
+  };
+
   const columns: GridColDef[] = [
     { field: "name", headerName: "Name", flex: 1 },
     { field: "email", headerName: "Email", flex: 1 },
@@ -28,7 +41,7 @@ const DoctorTable = ({
         return (
           <Box>
             <IconButton
-              //   onClick={() => handleDelete(row.id)}
+              onClick={() => handleDelete(row.id)}
               aria-label="delete"
             >
               <DeleteIcon sx={{ color: "red" }} />
