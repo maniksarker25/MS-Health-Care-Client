@@ -4,12 +4,20 @@ import React, { useState } from "react";
 import CreateDoctorModal from "./components/CreateDoctorModal";
 import { useGetAllDoctorsQuery } from "@/redux/api/doctorApi";
 import DoctorTable from "./components/DoctorTable";
+import { useDebounce } from "@/redux/hooks";
 
 const DoctorsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const query: Record<string, any> = {};
   const [searchTerm, setSearchTerm] = useState<string>("");
-  query["searchTerm"] = searchTerm;
+  // debounce
+  const debouncedTerm = useDebounce({
+    searchQuery: searchTerm,
+    delay: 600,
+  });
+  if (!!debouncedTerm) {
+    query["searchTerm"] = searchTerm;
+  }
   const { data, isLoading } = useGetAllDoctorsQuery({ ...query });
   const doctors = data?.doctors;
   const meta = data?.meta;
