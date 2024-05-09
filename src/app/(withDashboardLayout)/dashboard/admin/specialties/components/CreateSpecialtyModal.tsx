@@ -3,6 +3,7 @@ import MSForm from "@/components/Forms/MSForm";
 import MSInput from "@/components/Forms/MSInput";
 import MSModal from "@/components/Shared/MSModal/MSModal";
 import { useCreateSpecialtyMutation } from "@/redux/api/specialtiesApi";
+import { TMSModalProps } from "@/types/modal";
 import { modifyPayload } from "@/utils/modifyPayload";
 import { Button, Grid, Stack } from "@mui/material";
 
@@ -10,11 +11,7 @@ import React from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
-type TProps = {
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
-const CreateSpecialtyModal = ({ open, setOpen }: TProps) => {
+const CreateSpecialtyModal = ({ open, setOpen }: TMSModalProps) => {
   const [createSpecialty] = useCreateSpecialtyMutation();
 
   const handleCreateSpecialty = async (values: FieldValues) => {
