@@ -14,7 +14,7 @@ const CreateScheduleModal = ({ open, setOpen }: TMSModalProps) => {
       <MSForm onSubmit={handleCreateSchedule}>
         <Grid container spacing={2}>
           <Grid item md={12}>
-            <MSDatePicker />
+            <MSDatePicker name="startDate" />
           </Grid>
         </Grid>
         <Button type="submit">Create</Button>
