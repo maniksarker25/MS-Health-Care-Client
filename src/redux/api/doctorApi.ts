@@ -27,7 +27,18 @@ const doctorApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.doctor],
     }),
+    softDeleteDoctor: build.mutation({
+      query: (id) => ({
+        url: `/doctor/softDelete/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.doctor],
+    }),
   }),
 });
 
-export const { useCreateDoctorMutation, useGetAllDoctorsQuery } = doctorApi;
+export const {
+  useCreateDoctorMutation,
+  useGetAllDoctorsQuery,
+  useSoftDeleteDoctorMutation,
+} = doctorApi;

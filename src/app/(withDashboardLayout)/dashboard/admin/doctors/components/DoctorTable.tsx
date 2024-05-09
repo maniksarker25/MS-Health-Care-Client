@@ -5,6 +5,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Link from "next/link";
 import { toast } from "sonner";
+import { useSoftDeleteDoctorMutation } from "@/redux/api/doctorApi";
 
 const DoctorTable = ({
   doctors,
@@ -13,16 +14,18 @@ const DoctorTable = ({
   doctors: IDoctor[];
   meta: TMeta;
 }) => {
+  const [softDeleteDoctor] = useSoftDeleteDoctorMutation();
   const handleDelete = async (id: string) => {
-    // try {
-    //   if (res?.id) {
-    //     toast.success("Doctor deleted successfully");
-    //   } else {
-    //     toast.error(res.message);
-    //   }
-    // } catch (error: any) {
-    //   console.error(error.message);
-    // }
+    try {
+      const res = await softDeleteDoctor(id).unwrap();
+      if (res?.id) {
+        toast.success("Doctor deleted successfully");
+      } else {
+        toast.error(res.message);
+      }
+    } catch (error: any) {
+      console.error(error.message);
+    }
   };
 
   const columns: GridColDef[] = [
