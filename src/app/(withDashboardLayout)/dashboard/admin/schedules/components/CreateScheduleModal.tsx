@@ -8,13 +8,24 @@ import React from "react";
 import { FieldValues } from "react-hook-form";
 
 const CreateScheduleModal = ({ open, setOpen }: TMSModalProps) => {
-  const handleCreateSchedule = async (values: FieldValues) => {};
+  const handleCreateSchedule = async (values: FieldValues) => {
+    console.log(values);
+  };
   return (
     <MSModal open={open} setOpen={setOpen} title={"Create Schedule"}>
       <MSForm onSubmit={handleCreateSchedule}>
-        <Grid container spacing={2}>
+        <Grid
+          container
+          spacing={2}
+          sx={{
+            width: "400px",
+          }}
+        >
           <Grid item md={12}>
-            <MSDatePicker name="startDate" />
+            <MSDatePicker name="startDate" label="Start Date" />
+          </Grid>
+          <Grid item md={12}>
+            <MSDatePicker name="endDate" label="End Date" />
           </Grid>
         </Grid>
         <Button type="submit">Create</Button>
