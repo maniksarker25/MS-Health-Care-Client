@@ -32,7 +32,7 @@ const MSForm = ({
   const methods = useForm(formConfig);
   const { handleSubmit, reset } = methods;
   const submit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    // console.log(data);
     onSubmit(data);
     // reset();
   };
