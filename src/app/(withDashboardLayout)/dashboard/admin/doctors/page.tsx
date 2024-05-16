@@ -19,6 +19,7 @@ const DoctorsPage = () => {
     query["searchTerm"] = searchTerm;
   }
   const { data, isLoading } = useGetAllDoctorsQuery({ ...query });
+
   const doctors = data?.doctors;
   const meta = data?.meta;
 

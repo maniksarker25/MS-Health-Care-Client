@@ -21,10 +21,12 @@ const CreateScheduleModal = ({ open, setOpen }: TMSModalProps) => {
     values.endTime = timeFormatter(values.endTime);
     try {
       const res = await createSchedule(values).unwrap();
-      console.log(res);
+
       if (res?.length) {
         toast.success("Schedule created successfully");
         setOpen(false);
+      } else {
+        toast.error("Something went wrong");
       }
     } catch (error: any) {
       console.error(error.message);
