@@ -1,4 +1,4 @@
-import { TMeta } from "@/types";
+import { TMeta, TReduxResponse, TSchedule } from "@/types";
 import { tagTypes } from "../tagTypes";
 import { baseApi } from "./baseApi";
 
@@ -20,10 +20,10 @@ export const scheduleApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformResponse: (response: [], meta: TMeta) => {
+      transformResponse: (response: TReduxResponse) => {
         return {
-          schedules: response,
-          meta,
+          schedules: response.data,
+          meta: response.meta,
         };
       },
       providesTags: [tagTypes.schedule],

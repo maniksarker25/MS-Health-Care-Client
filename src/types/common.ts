@@ -1,6 +1,7 @@
 import { USER_ROLE } from "@/constants/role";
 import { SvgIconTypeMap } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
+import { BaseQueryApi } from "@reduxjs/toolkit/query";
 
 export type TMeta = {
   page: number;
@@ -33,3 +34,5 @@ export type IGenericErrorMessage = {
   path: string | number;
   message: string;
 };
+
+export type TReduxResponse = TResponseSuccess & BaseQueryApi;
