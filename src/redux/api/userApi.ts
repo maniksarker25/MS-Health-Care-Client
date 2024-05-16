@@ -12,3 +12,5 @@ export const userApi = baseApi.injectEndpoints({
     }),
   }),
 });
+
+export const { useGetSingleUserQuery } = userApi;
