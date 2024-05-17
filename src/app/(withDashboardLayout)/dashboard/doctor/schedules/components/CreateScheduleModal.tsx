@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Stack } from "@mui/material";
 import MSModal from "@/components/Shared/MSModal/MSModal";
 import { useGetAllSchedulesQuery } from "@/redux/api/scheduleApi";
+import MultipleSelect from "./MultipleSelect";
 
 type TProps = {
   open: boolean;
@@ -53,11 +54,11 @@ const DoctorScheduleModal = ({ open, setOpen }: TProps) => {
             sx={{ width: "100%" }}
           />
         </LocalizationProvider>
-        {/* <MultipleSelectFieldChip
+        <MultipleSelect
           schedules={schedules}
           selectedScheduleIds={selectedScheduleIds}
           setSelectedScheduleIds={setSelectedScheduleIds}
-        /> */}
+        />
 
         {/* <LoadingButton
           size="small"
