@@ -49,13 +49,14 @@ export default function MultipleSelect({
   setSelectedScheduleIds,
 }: any) {
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState<string[]>([]);
 
-  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+  const handleChange = (
+    event: SelectChangeEvent<typeof selectedScheduleIds>
+  ) => {
     const {
       target: { value },
     } = event;
-    setPersonName(
+    setSelectedScheduleIds(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
@@ -69,14 +70,25 @@ export default function MultipleSelect({
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
-          value={personName}
+          value={selectedScheduleIds}
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selected.map((value) => (
-                <Chip key={value} label={value} />
-              ))}
+              {selected.map((value: any) => {
+                const selectedSchedule = schedules.find(
+                  (schedule: any) => schedule.id === value
+                );
+                if (!selectedSchedule) return null;
+
+                const formattedTimeSlot = `${dayjs(
+                  selectedSchedule.startDateTime
+                ).format("hh:mm a")} - ${dayjs(
+                  selectedSchedule.endDateTime
+                ).format("hh:mm a")}`;
+
+                return <Chip key={value} label={formattedTimeSlot} />;
+              })}
             </Box>
           )}
           MenuProps={MenuProps}
@@ -85,7 +97,7 @@ export default function MultipleSelect({
             <MenuItem
               key={schedule?.id}
               value={schedule?.id}
-              style={getStyles(schedule.id, personName, theme)}
+              style={getStyles(schedule.id, selectedScheduleIds, theme)}
             >
               {`${dayjs(schedule.startDateTime).format("hh:mm a")} - ${dayjs(
                 schedule.endDateTime

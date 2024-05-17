@@ -4,23 +4,25 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import { useState } from "react";
 
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import MSModal from "@/components/Shared/MSModal/MSModal";
 import { useGetAllSchedulesQuery } from "@/redux/api/scheduleApi";
 import MultipleSelect from "./MultipleSelect";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { useCreateDoctorScheduleMutation } from "@/redux/api/doctorScheduleApi";
+import { toast } from "sonner";
 
 type TProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const DoctorScheduleModal = ({ open, setOpen }: TProps) => {
+const CreateDoctorScheduleModal = ({ open, setOpen }: TProps) => {
   const [selectedDate, setSelectedDate] = useState(
     dayjs(new Date()).toISOString()
   );
 
   const [selectedScheduleIds, setSelectedScheduleIds] = useState<string[]>([]);
-
   const query: Record<string, any> = {};
 
   if (!!selectedDate) {
@@ -38,7 +40,29 @@ const DoctorScheduleModal = ({ open, setOpen }: TProps) => {
 
   const { data } = useGetAllSchedulesQuery(query);
   const schedules = data?.schedules;
-  console.log(schedules);
+
+  // create doctor mutation
+  const [createDoctorSchedule, { isLoading }] =
+    useCreateDoctorScheduleMutation();
+
+  // create schedule
+  const handleCreateDoctorSchedule = async () => {
+    const toastId = toast.loading("Doctor schedule creating...");
+    try {
+      const res = await createDoctorSchedule({
+        scheduleIds: selectedScheduleIds,
+      }).unwrap();
+      if (res?.count) {
+        toast.success("Doctor schedule created successfully", { id: toastId });
+        setOpen(false);
+      } else {
+        toast.error("Something went wrong", { id: toastId });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong", { id: toastId });
+    }
+  };
 
   return (
     <MSModal open={open} setOpen={setOpen} title="Create Doctor Schedule">
@@ -54,24 +78,28 @@ const DoctorScheduleModal = ({ open, setOpen }: TProps) => {
             sx={{ width: "100%" }}
           />
         </LocalizationProvider>
-        <MultipleSelect
-          schedules={schedules}
-          selectedScheduleIds={selectedScheduleIds}
-          setSelectedScheduleIds={setSelectedScheduleIds}
-        />
+        {schedules?.length ? (
+          <MultipleSelect
+            schedules={schedules}
+            selectedScheduleIds={selectedScheduleIds}
+            setSelectedScheduleIds={setSelectedScheduleIds}
+          />
+        ) : (
+          <Typography>There is no schedule is this day</Typography>
+        )}
 
-        {/* <LoadingButton
+        <LoadingButton
           size="small"
-          onClick={onSubmit}
+          onClick={handleCreateDoctorSchedule}
           loading={isLoading}
           loadingIndicator="Submitting..."
           variant="contained"
         >
           <span>Submit</span>
-        </LoadingButton> */}
+        </LoadingButton>
       </Stack>
     </MSModal>
   );
 };
 
-export default DoctorScheduleModal;
+export default CreateDoctorScheduleModal;
