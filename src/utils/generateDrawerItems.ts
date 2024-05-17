@@ -12,6 +12,14 @@ import PaymentIcon from "@mui/icons-material/Payment";
 export const generateDrawerItems = (role: TUserRole): TDrawerItem[] => {
   const menuItems: TDrawerItem[] = [];
 
+  const defaultMenus = [
+    {
+      title: "Profile",
+      path: `${role}/profile`,
+      icon: CalendarMonthIcon,
+    },
+  ];
+
   switch (role) {
     case USER_ROLE.SUPER_ADMIN:
       menuItems.push(
@@ -107,5 +115,5 @@ export const generateDrawerItems = (role: TUserRole): TDrawerItem[] => {
       break;
   }
 
-  return [...menuItems];
+  return [...menuItems, ...defaultMenus];
 };
