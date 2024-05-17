@@ -53,7 +53,7 @@ const SpecialtiesTable = ({ data }: { data: TSpecialty[] }) => {
     },
   ];
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ height: 700, width: "100%" }}>
       <DataGrid rows={data} columns={columns} hideFooter={true} />
     </div>
   );

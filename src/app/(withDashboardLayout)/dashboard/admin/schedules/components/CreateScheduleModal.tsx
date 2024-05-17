@@ -8,6 +8,7 @@ import { TMSModalProps } from "@/types/modal";
 import { dateFormatter } from "@/utils/dateFormatter";
 import { timeFormatter } from "@/utils/timeFormatter";
 import { Box, Button, Grid } from "@mui/material";
+import dayjs from "dayjs";
 import React from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
@@ -21,7 +22,6 @@ const CreateScheduleModal = ({ open, setOpen }: TMSModalProps) => {
     values.endTime = timeFormatter(values.endTime);
     try {
       const res = await createSchedule(values).unwrap();
-
       if (res?.length) {
         toast.success("Schedule created successfully");
         setOpen(false);

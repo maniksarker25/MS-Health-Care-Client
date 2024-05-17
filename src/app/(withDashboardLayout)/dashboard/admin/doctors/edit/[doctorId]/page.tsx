@@ -44,7 +44,6 @@ const DoctorUpdatePage = ({ params }: TParams) => {
         id: params.doctorId,
         body: values,
       }).unwrap();
-      console.log(res);
       if (res?.id) {
         toast.success("Doctor Updated Successfully!!!", { id: toastId });
         router.push("/dashboard/admin/doctors");
@@ -61,7 +60,9 @@ const DoctorUpdatePage = ({ params }: TParams) => {
       <Typography variant="h5" component={"h4"}>
         Update Doctor Information
       </Typography>
-      {data && (
+      {isLoading ? (
+        "Loading..."
+      ) : (
         <MSForm onSubmit={handleUpdateDoctor} defaultValues={defaultValues}>
           <Grid container spacing={2} sx={{ my: 5 }}>
             <Grid item xs={12} sm={12} md={4}>
