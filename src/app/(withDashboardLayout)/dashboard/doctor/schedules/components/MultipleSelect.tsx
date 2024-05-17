@@ -9,6 +9,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import { timeFormatter } from "@/utils/timeFormatter";
 import dayjs from "dayjs";
+import { TSchedule } from "@/types";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -77,7 +78,7 @@ export default function MultipleSelect({
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
               {selected.map((value: any) => {
                 const selectedSchedule = schedules.find(
-                  (schedule: any) => schedule.id === value
+                  (schedule: TSchedule) => schedule.id === value
                 );
                 if (!selectedSchedule) return null;
 
@@ -93,7 +94,7 @@ export default function MultipleSelect({
           )}
           MenuProps={MenuProps}
         >
-          {schedules?.map((schedule: any) => (
+          {schedules?.map((schedule: TSchedule) => (
             <MenuItem
               key={schedule?.id}
               value={schedule?.id}

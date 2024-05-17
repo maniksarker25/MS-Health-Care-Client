@@ -1,4 +1,4 @@
-import { TMeta } from "@/types";
+import { TDoctorSchedule, TMeta } from "@/types";
 import { dateFormatter } from "@/utils/dateFormatter";
 
 import { Box, IconButton } from "@mui/material";
@@ -11,14 +11,14 @@ const DoctorScheduleTable = ({
   doctorSchedules,
   meta,
 }: {
-  doctorSchedules: any;
+  doctorSchedules: TDoctorSchedule[];
   meta: TMeta;
 }) => {
   const [updatedDoctorSchedules, setUpdatedDoctorSchedules] = useState<any>([]);
 
   useEffect(() => {
     const updatedData = doctorSchedules?.map(
-      (doctorSchedule: any, index: number) => {
+      (doctorSchedule: TDoctorSchedule, index: number) => {
         return {
           sl: index + 1,
           id: doctorSchedule?.doctorId,

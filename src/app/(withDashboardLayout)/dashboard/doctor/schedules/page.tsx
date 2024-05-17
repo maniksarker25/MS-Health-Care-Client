@@ -15,7 +15,11 @@ const DoctorSchedulePage = () => {
     <Box>
       <Button onClick={() => setIsModalOpen(true)}>Create Schedule</Button>
       <CreateDoctorScheduleModal open={isModalOpen} setOpen={setIsModalOpen} />
-      <Box>
+      <Box
+        sx={{
+          mt: "20px",
+        }}
+      >
         <DoctorScheduleTable doctorSchedules={doctorSchedules} meta={meta} />
       </Box>
     </Box>
