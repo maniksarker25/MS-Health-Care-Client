@@ -38,7 +38,7 @@ const CreateDoctorScheduleModal = ({ open, setOpen }: TProps) => {
       .toISOString();
   }
 
-  const { data } = useGetAllSchedulesQuery(query);
+  const { data, refetch } = useGetAllSchedulesQuery(query);
   const schedules = data?.schedules;
 
   // create doctor mutation
@@ -55,6 +55,7 @@ const CreateDoctorScheduleModal = ({ open, setOpen }: TProps) => {
       if (res?.count) {
         toast.success("Doctor schedule created successfully", { id: toastId });
         setOpen(false);
+        refetch();
       } else {
         toast.error("Something went wrong", { id: toastId });
       }
