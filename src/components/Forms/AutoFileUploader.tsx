@@ -32,7 +32,7 @@ const AutoFileUploader = ({
         startIcon={icon ? icon : <CloudUploadIcon />}
         sx={{ ...sx }}
       >
-        {label}
+        {label || ""}
         <Input
           type="file"
           inputProps={{ accept: accept }}
