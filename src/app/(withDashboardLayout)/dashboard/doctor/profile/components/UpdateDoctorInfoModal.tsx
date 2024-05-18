@@ -16,6 +16,7 @@ import {
 } from "@/redux/api/doctorApi";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 
 type TProps = {
   open: boolean;
@@ -77,10 +78,14 @@ const UpdateDoctorInfoModal = ({ open, setOpen, id }: TProps) => {
     updatedValues.specialties = specialties;
 
     try {
-      const res = await updateDoctor({ body: updatedValues, id });
-      console.log(res);
-      await refetch();
-      setOpen(false);
+      const res = await updateDoctor({ body: updatedValues, id }).unwrap();
+      if (res?.id) {
+        toast.success("Doctor updated successfully");
+        await refetch();
+        setOpen(false);
+      } else {
+        toast.error("Something went wrong");
+      }
     } catch (error) {
       console.log(error);
     }
