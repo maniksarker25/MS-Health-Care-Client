@@ -2,8 +2,18 @@ import AutoFileUploader from "@/components/Forms/AutoFileUploader";
 import { Box, Rating, Typography } from "@mui/material";
 import Image from "next/image";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import { useUpdateMyProfileMutation } from "@/redux/api/profile";
+import CircularProgress from "@mui/material/CircularProgress";
 const DoctorProfile = ({ data }: any) => {
-  const handleProfilePhotoChange = (file: File) => {};
+  const [updateMyProfile, { isLoading: updating }] =
+    useUpdateMyProfileMutation();
+  const handleProfilePhotoChange = (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("data", JSON.stringify({}));
+    updateMyProfile(formData);
+  };
+
   return (
     <Box
       sx={{
@@ -36,19 +46,30 @@ const DoctorProfile = ({ data }: any) => {
             marginTop: "-50px",
           }}
         >
-          <AutoFileUploader
-            name="file"
-            label=""
-            variant="outlined"
-            sx={{
-              backgroundColor: "#fff",
-              borderRadius: "100%",
-              border: "none",
-              ":hover": { border: "none", backgroundColor: "#fff" },
-            }}
-            icon={<CameraAltIcon />}
-            onFileUpload={handleProfilePhotoChange}
-          />
+          {updating ? (
+            <CircularProgress
+              size={24}
+              sx={{
+                backgroundColor: "#fff",
+                borderRadius: "100%",
+                padding: "5px",
+              }}
+            />
+          ) : (
+            <AutoFileUploader
+              name="file"
+              label=""
+              variant="outlined"
+              sx={{
+                backgroundColor: "#fff",
+                borderRadius: "100%",
+                border: "none",
+                ":hover": { border: "none", backgroundColor: "#fff" },
+              }}
+              icon={<CameraAltIcon />}
+              onFileUpload={handleProfilePhotoChange}
+            />
+          )}
         </Box>
         <Box
           sx={{
