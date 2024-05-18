@@ -9,7 +9,7 @@ import DoctorInformation from "./components/DoctorInformation";
 
 const DoctorProfilePage = () => {
   const { data, isLoading } = useGetMyProfileQuery({});
-  console.log(data);
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -39,15 +39,18 @@ const DoctorProfilePage = () => {
       >
         <Box
           sx={{
-            mt: "-100px",
+            mt: {
+              xs: "-200px",
+              md: "-100px",
+            },
             position: "absolute",
           }}
         >
           <Grid spacing={2} container>
-            <Grid item lg={4}>
+            <Grid item xs={12} lg={4}>
               <DoctorProfile data={data} />
             </Grid>
-            <Grid item lg={8}>
+            <Grid item xs={12} lg={8}>
               <Box
                 sx={{
                   backgroundColor: "#fff",

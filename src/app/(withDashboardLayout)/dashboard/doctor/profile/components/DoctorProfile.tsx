@@ -1,8 +1,9 @@
+import AutoFileUploader from "@/components/Forms/AutoFileUploader";
 import { Box, Rating, Typography } from "@mui/material";
 import Image from "next/image";
-import React from "react";
-
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 const DoctorProfile = ({ data }: any) => {
+  const handleProfilePhotoChange = (file: File) => {};
   return (
     <Box
       sx={{
@@ -31,8 +32,28 @@ const DoctorProfile = ({ data }: any) => {
         </Box>
         <Box
           sx={{
+            marginLeft: "200px",
+            marginTop: "-50px",
+          }}
+        >
+          <AutoFileUploader
+            name="file"
+            label=""
+            variant="outlined"
+            sx={{
+              backgroundColor: "#fff",
+              borderRadius: "100%",
+              border: "none",
+              ":hover": { border: "none", backgroundColor: "#fff" },
+            }}
+            icon={<CameraAltIcon />}
+            onFileUpload={handleProfilePhotoChange}
+          />
+        </Box>
+        <Box
+          sx={{
             textAlign: "center",
-            mt: "5px",
+            mt: "35px",
           }}
         >
           <Typography fontSize={"20px"} fontWeight={600}>

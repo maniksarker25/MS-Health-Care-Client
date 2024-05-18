@@ -3,10 +3,14 @@ import { Box, Stack, styled, Typography } from "@mui/material";
 const StyledInformationBox = styled(Box)(({ theme }) => ({
   background: "#f4f7fe",
   borderRadius: theme.spacing(1),
-  width: "45%",
+
   padding: "8px 16px",
   "& p": {
     fontWeight: 600,
+  },
+  width: "100%", // default for small devices
+  [theme.breakpoints.up("md")]: {
+    width: "45%", // for medium and up devices
   },
 }));
 
