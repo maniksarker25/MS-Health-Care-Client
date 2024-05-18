@@ -1,4 +1,6 @@
-import { Box, Stack, styled, Typography } from "@mui/material";
+import { Box, Button, Stack, styled, Typography } from "@mui/material";
+import { useState } from "react";
+import UpdateDoctorInfoModal from "./UpdateDoctorInfoModal";
 
 const StyledInformationBox = styled(Box)(({ theme }) => ({
   background: "#f4f7fe",
@@ -15,12 +17,27 @@ const StyledInformationBox = styled(Box)(({ theme }) => ({
 }));
 
 const DoctorInformation = ({ data }: any) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <>
-      <Typography variant="h5" color="primary.main" mb={2}>
-        Personal Information
-      </Typography>
-
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: "15px",
+        }}
+      >
+        <Typography variant="h5" color="primary.main" mb={2}>
+          Personal Information
+        </Typography>
+        <Button onClick={() => setIsModalOpen(true)}>Update Information</Button>
+      </Box>
+      <UpdateDoctorInfoModal
+        open={isModalOpen}
+        setOpen={setIsModalOpen}
+        id={data?.id}
+      />
       <Stack direction={{ xs: "column", md: "row" }} gap={2} flexWrap={"wrap"}>
         <StyledInformationBox>
           <Typography color="secondary" variant="caption">
@@ -62,7 +79,7 @@ const DoctorInformation = ({ data }: any) => {
           <Typography variant="caption" color="secondary">
             Anointment Fee
           </Typography>
-          <Typography>{data?.apointmentFee}</Typography>
+          <Typography>{data?.appointmentFee}</Typography>
         </StyledInformationBox>
         <StyledInformationBox>
           <Typography variant="caption" color="secondary">
