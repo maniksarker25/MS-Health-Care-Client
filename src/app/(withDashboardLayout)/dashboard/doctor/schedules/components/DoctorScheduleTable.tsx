@@ -1,7 +1,7 @@
 import { TDoctorSchedule, TMeta } from "@/types";
 import { dateFormatter } from "@/utils/dateFormatter";
 
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, Pagination } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -10,18 +10,28 @@ import dayjs from "dayjs";
 const DoctorScheduleTable = ({
   doctorSchedules,
   meta,
+  page,
+  setPage,
+  limit,
 }: {
   doctorSchedules: TDoctorSchedule[];
   meta: TMeta;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  limit: number;
 }) => {
   const [updatedDoctorSchedules, setUpdatedDoctorSchedules] = useState<any>([]);
+  let pageCount: number;
+  if (meta?.total) {
+    pageCount = Math.ceil(meta.total / limit);
+  }
 
   useEffect(() => {
     const updatedData = doctorSchedules?.map(
       (doctorSchedule: TDoctorSchedule, index: number) => {
         return {
           sl: index + 1,
-          id: doctorSchedule?.doctorId,
+          id: `${doctorSchedule.doctorId}-${index}`,
           startDate: dateFormatter(doctorSchedule?.schedule.startDateTime),
           endDate: dateFormatter(doctorSchedule?.schedule.endDateTime),
           startTime: dayjs(doctorSchedule?.schedule.startDateTime).format(
@@ -62,10 +72,39 @@ const DoctorScheduleTable = ({
       },
     },
   ];
+
+  // handle pagination change
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
   return (
-    <div style={{ height: 700, width: "100%" }}>
-      <DataGrid rows={updatedDoctorSchedules ?? []} columns={columns} />
-    </div>
+    <Box>
+      <DataGrid
+        rows={updatedDoctorSchedules ?? []}
+        columns={columns}
+        hideFooterPagination
+        slots={{
+          footer: () => {
+            return (
+              <Box
+                sx={{
+                  mb: 2,
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Pagination
+                  color="primary"
+                  count={pageCount}
+                  page={page}
+                  onChange={handleChange}
+                />
+              </Box>
+            );
+          },
+        }}
+      />
+    </Box>
   );
 };
 

@@ -8,7 +8,13 @@ import DoctorScheduleTable from "./components/DoctorScheduleTable";
 
 const DoctorSchedulePage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { data } = useGetMyScheduleQuery({});
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const query: Record<string, any> = {};
+
+  query["page"] = page;
+  query["limit"] = limit;
+  const { data } = useGetMyScheduleQuery({ ...query });
   const doctorSchedules = data?.data;
   const meta = data?.meta;
   return (
@@ -20,7 +26,13 @@ const DoctorSchedulePage = () => {
           mt: "20px",
         }}
       >
-        <DoctorScheduleTable doctorSchedules={doctorSchedules} meta={meta} />
+        <DoctorScheduleTable
+          doctorSchedules={doctorSchedules}
+          meta={meta}
+          page={page}
+          setPage={setPage}
+          limit={limit}
+        />
       </Box>
     </Box>
   );

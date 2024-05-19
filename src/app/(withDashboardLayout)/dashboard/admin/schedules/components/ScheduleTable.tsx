@@ -18,8 +18,9 @@ const ScheduleTable = ({
   const [updatedSchedules, setUpdatedSchedules] = useState<any>([]);
 
   useEffect(() => {
-    const updatedData = schedules?.map((schedule: TSchedule) => {
+    const updatedData = schedules?.map((schedule: TSchedule, index: number) => {
       return {
+        sl: index + 1,
         id: schedule.id,
         startDate: dateFormatter(schedule.startDateTime),
         endDate: dateFormatter(schedule.endDateTime),
@@ -30,6 +31,7 @@ const ScheduleTable = ({
     setUpdatedSchedules(updatedData);
   }, [schedules]);
   const columns: GridColDef[] = [
+    { field: "sl", headerName: "SL", flex: 1 },
     { field: "startDate", headerName: "Start Date", flex: 1 },
     { field: "endDate", headerName: "End Date", flex: 1 },
     { field: "startTime", headerName: "Start Time", flex: 1 },
@@ -62,7 +64,7 @@ const ScheduleTable = ({
   ];
   return (
     <div style={{ height: 700, width: "100%" }}>
-      <DataGrid rows={updatedSchedules ?? []} columns={columns} />
+      <DataGrid rows={updatedSchedules} columns={columns} />
     </div>
   );
 };
