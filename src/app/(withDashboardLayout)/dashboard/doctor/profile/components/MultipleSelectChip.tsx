@@ -22,7 +22,7 @@ const MenuProps = {
 function getStyles(name: string, personName: readonly string[], theme: Theme) {
   return {
     fontWeight:
-      personName.indexOf(name) === -1
+      personName?.indexOf(name) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   };
@@ -33,6 +33,7 @@ export default function MultipleSelectChip({
   setSelectedIds,
   selectedIds,
 }: any) {
+  console.log("selcted ids", selectedIds);
   const theme = useTheme();
 
   const handleChange = (event: SelectChangeEvent<typeof selectedIds>) => {
@@ -48,7 +49,7 @@ export default function MultipleSelectChip({
       <FormControl sx={{ width: "100%" }}>
         <InputLabel
           id="demo-multiple-chip-label"
-          sx={{ mt: selectedIds.length > 0 ? 0 : -1 }}
+          sx={{ mt: selectedIds?.length > 0 ? 0 : -1 }}
         >
           Specialties
         </InputLabel>
@@ -56,7 +57,7 @@ export default function MultipleSelectChip({
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
-          value={selectedIds}
+          value={selectedIds || []}
           onChange={handleChange}
           input={
             <OutlinedInput

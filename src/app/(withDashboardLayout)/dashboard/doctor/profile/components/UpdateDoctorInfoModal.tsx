@@ -3,12 +3,11 @@ import MSInput from "@/components/Forms/MSInput";
 import MSSelect from "@/components/Forms/MSSelect";
 import MSFullScreenModal from "@/components/Shared/MSModal/MSFullScreenModal";
 import { Gender } from "@/constants/common";
-import { useGetMyProfileQuery } from "@/redux/api/profile";
 import { useGetAllSpecialtiesQuery } from "@/redux/api/specialtiesApi";
-import { TMSModalProps } from "@/types/modal";
+
 import { Button, Grid } from "@mui/material";
 import MultipleSelectChip from "./MultipleSelectChip";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import {
   useGetDoctorQuery,
@@ -48,6 +47,17 @@ const UpdateDoctorInfoModal = ({ open, setOpen, id }: TProps) => {
   const [updateDoctor, { isLoading: updating }] = useUpdateDoctorMutation();
   const [selectedSpecialtiesIds, setSelectedSpecialtiesIds] = useState([]);
   console.log(selectedSpecialtiesIds);
+  console.log(doctorData);
+  useEffect(() => {
+    if (!isSuccess) return;
+
+    setSelectedSpecialtiesIds(
+      doctorData?.doctorSpecialties?.map((sp: any) => {
+        return sp.specialtiesId;
+      })
+    );
+  }, [isSuccess]);
+
   const handleDoctorInfoUpdate = async (values: FieldValues) => {
     const specialties = selectedSpecialtiesIds.map((specialtiesId: string) => ({
       specialtiesId,
