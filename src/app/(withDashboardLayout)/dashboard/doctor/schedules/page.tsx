@@ -5,7 +5,7 @@ import CreateDoctorScheduleModal from "./components/CreateDoctorScheduleModal";
 
 import { useGetMyScheduleQuery } from "@/redux/api/doctorScheduleApi";
 import DoctorScheduleTable from "./components/DoctorScheduleTable";
-
+import AddIcon from "@mui/icons-material/Add";
 const DoctorSchedulePage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [page, setPage] = useState(1);
@@ -19,7 +19,9 @@ const DoctorSchedulePage = () => {
   const meta = data?.meta;
   return (
     <Box>
-      <Button onClick={() => setIsModalOpen(true)}>Create Schedule</Button>
+      <Button onClick={() => setIsModalOpen(true)} endIcon={<AddIcon />}>
+        Create Schedule
+      </Button>
       <CreateDoctorScheduleModal open={isModalOpen} setOpen={setIsModalOpen} />
       <Box
         sx={{
