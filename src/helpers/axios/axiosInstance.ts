@@ -37,6 +37,7 @@ instance.interceptors.response.use(
     const responseObject: TResponseSuccess = {
       data: response?.data?.data,
       meta: response?.data?.meta,
+      // statusCode: response?.data?.statusCode,
     };
     return responseObject;
   },

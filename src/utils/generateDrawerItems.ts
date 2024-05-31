@@ -9,6 +9,7 @@ import TryIcon from "@mui/icons-material/Try";
 import BookOnlineIcon from "@mui/icons-material/BookOnline";
 import MedicationIcon from "@mui/icons-material/Medication";
 import PaymentIcon from "@mui/icons-material/Payment";
+import KeyIcon from "@mui/icons-material/Key";
 export const generateDrawerItems = (role: TUserRole): TDrawerItem[] => {
   const menuItems: TDrawerItem[] = [];
 
@@ -17,6 +18,11 @@ export const generateDrawerItems = (role: TUserRole): TDrawerItem[] => {
       title: "Profile",
       path: `${role}/profile`,
       icon: CalendarMonthIcon,
+    },
+    {
+      title: "Change Password",
+      path: `change-password`,
+      icon: KeyIcon,
     },
   ];
 

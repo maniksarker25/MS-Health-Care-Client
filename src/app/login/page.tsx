@@ -46,8 +46,8 @@ const LoginPage = () => {
       // console.log(res);
       if (res.success) {
         storeUserInfo(res?.data?.accessToken);
-        toast.success(res.message);
         // router.push("/dashboard");
+        toast.success(res.message);
       } else {
         setError(res.message);
       }
@@ -118,16 +118,21 @@ const LoginPage = () => {
                   />
                 </Grid>
               </Grid>
-              <Typography
-                sx={{
-                  cursor: "pointer",
-                }}
-                textAlign={"end"}
-                component="p"
-                fontWeight={600}
-              >
-                Forget Password
-              </Typography>
+              <Box sx={{ display: "flex", justifyContent: "end" }}>
+                <Typography
+                  sx={{
+                    cursor: "pointer",
+                    alignItems: "end",
+                    textDecoration: "underline",
+                  }}
+                  textAlign={"end"}
+                  fontWeight={600}
+                  component={Link}
+                  href={"/forgot-password"}
+                >
+                  Forgot Password
+                </Typography>
+              </Box>
               {error && (
                 <Box>
                   <Typography color={"red"}>{error}</Typography>
