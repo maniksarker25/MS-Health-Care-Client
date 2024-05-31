@@ -22,6 +22,7 @@ export type TDrawerItem = {
 export type TResponseSuccess = {
   data: any;
   meta: TMeta;
+  // statusCode: number;
 };
 
 export type IGenericErrorResponse = {
